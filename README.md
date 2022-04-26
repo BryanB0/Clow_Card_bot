@@ -1,31 +1,31 @@
- Clow_Card_bot
-Bot discord pour afficher les cartes de Clow de Sakura depuis une API
+# Clow_Card_bot
+*Bot discord pour afficher les cartes de Clow de Sakura depuis une API*
 
 ***
 
-## pour installer node : `npm install`
+### pour installer node : `npm install`
 
 le prefixe est : `cc.`
 
-### Afficher une carte aléatoire
+#### Afficher une carte aléatoire
 >random
 
-### Chercher une carte par l'ID
+#### Chercher une carte par l'ID
 >id `Id de la carte recherchée`
 
-### Chercher une carte par son numéro
+#### Chercher une carte par son numéro
 >number `Numéro de la carte recherchée`
 
-### Chercher une carte par son nom anglais
+#### Chercher une carte par son nom anglais
 >name `Nom anglais de la carte recherchée`
 
-### Chercher une carte par son nom francais
+#### Chercher une carte par son nom francais
 >namefr `Nom francais de la carte recherchée`
 
-### Chercher une carte par la carte à jouer
+#### Chercher une carte par la carte à jouer
 >gamecard `Carte à jouer de la carte de clow recherchée`
 
-## Chercher une ou plusieurs carte.s par mot clé
+#### Chercher une ou plusieurs carte.s par mot clé
 >keyword `Mot clé de la carte recherchée`
 
 *** 
