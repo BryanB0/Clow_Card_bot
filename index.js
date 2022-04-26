@@ -34,13 +34,19 @@ client.on("message", function (message) {
     arguments = arguments.split(";").join(",")
     arguments = arguments.split(',');
 
-    if (command === "test") {
+    if (command === "help") {
         let embed = new Discord.MessageEmbed()
             .setColor(embedColor)
-            .setTitle("Commmande bien recu !")
-            .setDescription(`Je fonctionne bien !`)
-        message.channel.send(embed);
-        console.log(values)
+            .setTitle("Liste des commades")
+            .setDescription("le prefixe est : "+"`" +prefix+"`")
+            .addField("random", "```Afficher une carte aléatoire```")
+            .addField("id `Id de la carte recherchée`", "```Chercher une carte par l'ID```")
+            .addField("number `Numéro de la carte recherchée`", "```Chercher une carte par son numéro```")
+            .addField("name `Nom anglais de la carte recherchée`", "```Chercher une carte par son nom anglais```")
+            .addField("namefr `Nom francais de la carte recherchée`", "```Chercher une carte par son nom francais```")
+            .addField("gamecard `Carte à jouer de la carte de clow recherchée`", "```Chercher une carte par la carte à jouer```")
+            .addField("keyword `Mot clé de la carte recherchée`", "```Chercher une ou plusieurs carte.s par mot clé```")
+            message.channel.send(embed);
     }
 
     ///////Carte Random/////////
