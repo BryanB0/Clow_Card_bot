@@ -1,6 +1,7 @@
 {
 	"prefix": "cc.",
-	"token": "Bot Token",
-	"embedColor" : "FFAD41"
+	"token": "NTY0MTg2MzA1MDgxMTE0NjQy.GgNfji.1fDUFRb0Jiv_Wn0tWtgksikiibB3vwzR5UMFes",
+	"embedColor" : "FFAD41", 
+	"link" : "https://discord.com/oauth2/authorize?client_id=564186305081114642&permissions=8&scope=bot%20applications.commands"
 	
 }
