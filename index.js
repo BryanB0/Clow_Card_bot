@@ -49,6 +49,7 @@ client.on("messageCreate", async function (message) {
             .setDescription("le prefixe est : " + "`" + prefix + "`")
             .addFields(
                 { name: "random", value: "```Afficher une carte aléatoire```" },
+                { name: "list", value: "```Afficher la liste des cartes```" },
                 { name: "id `Id de la carte recherchée`", value: "```Chercher une carte par l'ID```" },
                 { name: "number `Numéro de la carte recherchée`", value: "```Chercher une carte par son numéro```" },
                 { name: "name `Nom anglais de la carte recherchée`", value: "```Chercher une carte par son nom anglais```" },
