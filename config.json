@@ -1,7 +1,0 @@
-{
-	"prefix": "cc.",
-	"token": "TOKEN",
-	"embedColor" : "FFAD41", 
-	"link" : "https://discord.com/oauth2/authorize?client_id=BOTID&permissions=8&scope=bot%20applications.commands"
-	
-}
