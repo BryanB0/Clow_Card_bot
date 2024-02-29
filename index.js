@@ -229,44 +229,6 @@ client.on("messageCreate", async function (message) {
     ///////Afficher la liste des cartes/////////
     else if (command === "list") {
         await showPage(message, 1);
-        /*function sendCardList() {
-            const pages = [];
-            const itemsPerPage = 25;
-            let pageNum = 1; // Initialisation du numéro de page
-
-            for (let i = 0; i < values.length; i += itemsPerPage) {
-                const currentCards = values.slice(i, i + itemsPerPage);
-
-                const pageEmbed = new EmbedBuilder()
-                    .setTitle("Carte de Clow")
-                    .setColor(embedColor)
-                    .setDescription('**Liste des Cartes**')
-                    .addFields(
-                        currentCards.map(carte => ({
-                            name: carte.name,
-                            value: carte.vfName,
-                            inline: true,
-                        })),
-                    )
-                    .setFooter(`Page ${pageNum}/${Math.ceil(values.length / itemsPerPage)}`);
-
-                pages.push(pageEmbed);
-                pageNum++; // Incrémentation du numéro de page
-            }
-
-            return pages;
-        }
-
-        // Créez une instance de Pagination
-        const pages = sendCardList();
-        const paginatedEmbed = new Pagination.Embeds()
-            .setArray(pages)
-            .setChannel(message.channel)
-            .setPage(1)
-            .setAuthorizedUsers([message.author.id]);
-
-        // Envoyez la première page
-        paginatedEmbed.build();*/
     }
 
 
@@ -315,68 +277,103 @@ client.on("messageCreate", async function (message) {
     }
 
     async function showPage(message, page) {
+        // Définition du nombre d'éléments par page
         const itemsPerPage = 25;
+
+        // Calcul du nombre total de pages
         const totalPages = Math.ceil(values.length / itemsPerPage);
 
+        // Vérification de la validité de la page actuelle
+        if (page < 1) page = 1;
+        if (page > totalPages) page = totalPages;
+
+        // Calcul de l'index de départ des éléments de la page actuelle
         const startIndex = (page - 1) * itemsPerPage;
+
+        // Extraction des éléments de la page actuelle
         const pageItems = values.slice(startIndex, startIndex + itemsPerPage);
 
-        const components = [
-            new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId('prev')
-                        .setLabel('Précédent')
-                        .setStyle(ButtonStyle.Primary)
-                        .setDisabled(page === 1),
-                    new ButtonBuilder()
-                        .setCustomId('next')
-                        .setLabel('Suivant')
-                        .setStyle(ButtonStyle.Primary)
-                        .setDisabled(page === totalPages)
-                )
-        ];
+        // Construction des composants d'action
 
+        const components = new ActionRowBuilder()
+            .addComponents(
+
+                new ButtonBuilder()
+                    .setCustomId('prev')
+                    .setLabel('Précédent')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId('next')
+                    .setLabel('Suivant')
+                    .setStyle(ButtonStyle.Primary)
+            );
+
+        // Construction de l'embed
         let embed = new EmbedBuilder()
             .setColor(embedColor)
             .setTitle("Carte de Clow")
             .setDescription("La Liste des Cartes")
             .addFields(
-                pageItems.map((item, index) => {
-                    return { name: `${startIndex + index + 1}. ${item.name}`, value: `${item.vfName}`, inline: true };
-                })
+                // Ajout des champs pour chaque élément de la page
+                pageItems.map((item, index) => ({
+                    name: `${startIndex + index + 1}. ${item.name}`,
+                    value: `${item.vfName}`,
+                    inline: true,
+                }))
             )
-            .setFooter({ text:`Page ${page}/${totalPages}`})
-
-       const msg = await message.channel.send({
+            .setFooter({ text: `Page ${page}/${totalPages}` });
+        // Envoi du message initial
+        const msg = await message.channel.send({
             embeds: [embed],
-            components: components
+            components: [components],
         });
 
+        // Définition du filtre pour les interactions
         const filter = (interaction) => interaction.user.id === message.author.id;
+
+        // Création du collecteur d'interactions
         const collector = msg.createMessageComponentCollector({ filter, time: 60000 });
 
+        // Gestion des interactions
         collector.on('collect', async (interaction) => {
             if (interaction.customId === 'prev') {
-                await interaction.update({
-                    components: components,
-                    embeds: [embed]
-                });
-                await showPage(message, page - 1);
+                if (page > 1) {
+                    page--;
+                }
+
             } else if (interaction.customId === 'next') {
-                await interaction.update({
-                    components: components,
-                    embeds: [embed]
-                });
-                await showPage(message, page + 1);
+                if (page < totalPages) {
+                    page++;
+                }
             }
+
+            // Mise à jour de l'index de départ et des éléments de la page
+            const newStartIndex = (page - 1) * itemsPerPage;
+            const newPageItems = values.slice(newStartIndex, newStartIndex + itemsPerPage);
+
+            // Reconstruction de l'embed avec le contenu mis à jour
+            embed = new EmbedBuilder()
+                .setColor(embedColor)
+                .setTitle("Carte de Clow")
+                .setDescription("La Liste des Cartes")
+                .addFields(
+                    // Ajout des champs pour les nouveaux éléments de la page
+                    newPageItems.map((item, index) => ({
+                        name: `${newStartIndex + index + 1}. ${item.name}`,
+                        value: `${item.vfName}`,
+                        inline: true,
+                    }))
+                )
+                .setFooter({ text: `Page ${page}/${totalPages}` });
+
+            // Mise à jour du message avec l'embed modifié
+            await interaction.update({ embeds: [embed] });
         });
 
+        // Suppression des boutons après le délai d'expiration
         collector.on('end', () => {
-            msg.edit({
-                components: [],
-                embeds: [embed]
-            });
+            const components = []; // Suppression des composants d'action
+            msg.edit({ embeds: [embed], components });
         });
     }
 });

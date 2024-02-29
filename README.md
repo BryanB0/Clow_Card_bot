@@ -10,6 +10,9 @@ le prefixe est : `cc.`
 #### Afficher une carte aléatoire
 >random
 
+#### Afficher la liste des cartes
+>list
+
 #### Chercher une carte par l'ID
 >id `Id de la carte recherchée`
 
