@@ -32,4 +32,4 @@ le prefixe est : `cc.`
 >keyword `Mot clé de la carte recherchée`
 
 *** 
-Développé par : [@Bryan1675](https://github.com/Bryan1675 "Github de Bryan 1675").
+Développé par : [@BryanB0](https://github.com/Bryan1675 "Github de Bryan 1675").
