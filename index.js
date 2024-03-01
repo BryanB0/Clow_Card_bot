@@ -56,7 +56,6 @@ client.on("messageCreate", async function (message) {
                 { name: "gamecard `Carte à jouer de la carte de clow recherchée`", value: "```Chercher une carte par la carte à jouer```" },
                 { name: "keyword `Mot clé de la carte recherchée`", value: "```Chercher une ou plusieurs carte.s par mot clé```" },
                 { name: "capture `épisode/film [numéro]`", value: "```Chercher une ou plusieurs carte.s avec son épisode de capture```" },
-                { name: "list", value: "```Affiche la liste des cartes```" }
             )
         message.channel.send({ embeds: [embed] });
     }
@@ -228,7 +227,7 @@ client.on("messageCreate", async function (message) {
 
     ///////Afficher la liste des cartes/////////
     else if (command === "list") {
-        await showPage(message, 1);
+        await showPage(message, 25, 1);
     }
 
 
@@ -276,9 +275,7 @@ client.on("messageCreate", async function (message) {
         message.channel.send({ embeds: [embed] });
     }
 
-    async function showPage(message, page) {
-        // Définition du nombre d'éléments par page
-        const itemsPerPage = 25;
+    async function showPage(message, itemsPerPage, page) {
 
         // Calcul du nombre total de pages
         const totalPages = Math.ceil(values.length / itemsPerPage);
