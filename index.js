@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, AttachmentBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { Client, GatewayIntentBits, AttachmentBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ActivityType } = require('discord.js');
 const client = new Client({
     intents:
         [GatewayIntentBits.Guilds,
@@ -11,7 +11,6 @@ const config = require('./config.json');
 const TOKEN = config.token;
 const prefix = config.prefix;
 const embedColor = config.embedColor;
-//const Pagination = require('discord-paginationembed');
 const api = require("./api.json");
 const Fuse = require('fuse.js');
 
@@ -20,7 +19,7 @@ client.on("ready", () => {
     client.user.setPresence({
         activities: [{
             name: "Capturer des cartes",
-            type: "PLAYING", // PLAYING, STREAMING, LISTENING, WATCHING
+            type: ActivityType.Playing, // PLAYING, STREAMING, LISTENING, WATCHING
             url: "https://www.twitch.tv/madeinbryan"
         }],
         status: "idle" // online, idle, dnd, offline
